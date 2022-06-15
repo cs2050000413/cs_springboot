@@ -1,0 +1,39 @@
+{
+  "groups": [
+    {
+      "name": "smsconfigure",
+      "type": "com.kaishun.study.config.SmsConfigure",
+      "sourceType": "com.kaishun.study.config.SmsConfigure"
+    }
+  ],
+  "properties": [
+    {
+      "name": "smsconfigure.access-key-i-d",
+      "type": "java.lang.String",
+      "sourceType": "com.kaishun.study.config.SmsConfigure"
+    },
+    {
+      "name": "smsconfigure.access-key-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.kaishun.study.config.SmsConfigure"
+    },
+    {
+      "name": "smsconfigure.region-id",
+      "type": "java.lang.String",
+      "sourceType": "com.kaishun.study.config.SmsConfigure"
+    },
+    {
+      "name": "smsconfigure.sign-name",
+      "type": "java.lang.String",
+      "description": "签名",
+      "sourceType": "com.kaishun.study.config.SmsConfigure"
+    },
+    {
+      "name": "smsconfigure.template-code",
+      "type": "java.lang.String",
+      "description": "模板",
+      "sourceType": "com.kaishun.study.config.SmsConfigure"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,79 @@
+server:
+  port: 9001
+#  ssl:
+#    key-store: classpath:3929326_www.zhoukaishun.com.pfx #ssl证书
+#    key-store-password: O6cpz12a #证书密码
+#    enabled: true
+#    key-store-type: pkcs12 #加密方式
+
+spring:
+  freemarker:
+    suffix: .html
+    cache: false
+  datasource:
+    name: kaishun #数据库名称
+    type: com.alibaba.druid.pool.DruidDataSource
+    #druid相关配置
+    druid:
+      #监控统计拦截的filters
+      filters: stat
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      #基本属性
+      url: jdbc:mysql://127.0.0.1:3306/kaishun?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: cs205000030
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8 #连接池最大连接数（使用负值表示没有限制）（默认值）
+        max-wait: -1ms #连接池最大阻塞等待时间（使用负值表示没有限制）（默认值）
+        max-idle: 8 #连接池中的最大空闲连接（默认值）
+        min-idle: 0 #连接池中的最小空闲连接（默认值）
+    timeout: 10000ms #连接超时时间（毫秒）
+    database: 0 #数据位置（可从redis desktop manager中查看，默认就是0）
+    password:  #如果设置了redis密码的话此处填写redis密码，否则可以不写这一行
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.kaishun.study.entity
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+logging:
+  level:
+    com.kaishun.study: DEBUG
+
+
+smsconfigure: #自定义smsconfigure配置
+  regionId:  #你的regionId
+  accessKeyID:  #你的accessKeyID
+  accessKeySecret:  #你的accessKeySecret
+  signName:   #你的signName
+  templateCode:  #你的templateCode
+
+
+##jwt配置
+audience:
+  # 代表这个JWT的接收对象,存入audience
+  #add by kaishun.zhou
+  clientId: YWRkJTIwYnklMjBrYWlzaHVuLnpob3U=
+  # 密钥, 经过Base64加密, 可自行替换
+  base64Secret: WVdSa0pUSXdZbmtsTWpCcllXbHphSFZ1TG5wb2IzVSUzRA==
+  # JWT的签发主体，存入issuer
+  name: restapiuser
+  # 过期时间，毫秒
+  expiresSecond: 7200000
+
+
+
+

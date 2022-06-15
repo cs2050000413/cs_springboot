@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>springboot+layui Demo</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="common/css/menuIndex.css">
+    <link rel="stylesheet" href="common/css/main.css">
+    <link rel="icon" href="common/images/me.jpg" type="image/x-icon"/>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" style="display: flex;flex-direction: row;justify-content:center;align-items:center;">
+        <div class="layui-logo">springboot+layui demo</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+<!--        <span style="color: red;display: inline-block">数据每天凌晨重置</span>-->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="common/images/me.jpg" class="layui-nav-img">
+                    <span class="userName">
+                        <!--用户名-->
+                    </span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" class="layui-nav-item logout" >退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <!--菜单目录-->
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div id="content">
+            <div class="slideshow">
+                <div class="slideshow-image" style="background-image: url('common/images/1.jpg')"></div>
+                <div class="slideshow-image" style="background-image: url('common/images/2.jpg')"></div>
+                <div class="slideshow-image" style="background-image: url('common/images/3.jpg')"></div>
+                <div class="slideshow-image" style="background-image: url('common/images/4.jpg')"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="layui/layui.js"></script>
+<script src="/common/js/home/index.js"></script>
+<script src="layui/jquery-3.3.1.min.js"></script>
+<script src="/common/js/jstree.js"></script>
+<script src="/common/js/ajax.js"></script>
+<script src="/common/js/utils.js"></script>
+
+</body>
+<script>
+
+
+    AsyncPost("/tbUser/info", null, function (data) {
+        $(".userName").text(data.data.userName);
+    });
+
+    $(".logout").click(function () {
+        layer.confirm('是否退出？', {
+            btn: ['确定', '取消'],
+        }, function (index, layero) {
+            AsyncPost("/tbUser/logout", null, function (result) {
+                localStorage.token = null;
+                window.location.href = "/"
+            })
+        });
+
+    })
+
+    SyncGet("/tbMenu/getMenus", null, function (data) {
+        if (data.data.length == 0) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.alert("暂无菜单,请联系管理员开启菜单");
+            });
+        }
+        var $li, $menu_dl;
+        $.each(data.data, function (index, item) {
+            if (item.number.length == 5) {
+                /*添加layui-nav-itemed类名，默认展开*/
+                $li = $('<li class="layui-nav-item"></li>');
+                var $menu_a_ = $('<a href="javascript:;">' + item.name + '</a>');
+                $li.append($menu_a_);
+                $menu_dl = $('<dl class="layui-nav-child"></dl>');
+                $li.append($menu_dl);
+                $("ul.layui-nav-tree").append($li);
+            } else if (item.number.length == 8) {
+                var $dd = $('<dd><a href="javascript:;" data-href="' + item.url + '">' + item.name + '</a></dd>');
+                $menu_dl.append($dd);
+            }
+        })
+    });
+
+
+</script>
+</html>

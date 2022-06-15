@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishun.study.dao.TbMenuDao">
+
+    <resultMap type="com.kaishun.study.entity.TbMenu" id="TbMenuMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="number" column="number" jdbcType="VARCHAR"/>
+        <result property="parentNumber" column="parent_number" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbMenuMap">
+        select
+          id, number, parent_number, name, remark, url, create_time, update_time, update_user
+        from kaishun.tb_menu
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbMenuMap">
+        select
+          id, number, parent_number, name, remark, url, create_time, update_time, update_user
+        from kaishun.tb_menu
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbMenuMap">
+        select
+          id, number, parent_number, name, remark, url, create_time, update_time, update_user
+        from kaishun.tb_menu
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="number != null and number != ''">
+                and number = #{number}
+            </if>
+            <if test="parent_number != null and parent_number != ''">
+                and parent_number = #{parent_number}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into kaishun.tb_menu(id,number, parent_number, name, remark, url, create_time, update_time, update_user)
+        values (#{id},#{number}, #{parentNumber}, #{name}, #{remark}, #{url}, #{createTime}, #{updateTime}, #{updateUser})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update kaishun.tb_menu
+        <set>
+            <if test="number != null and number != ''">
+                number = #{number},
+            </if>
+            <if test="parentNumber != null and parentNumber != ''">
+                parent_number = #{parentNumber},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from kaishun.tb_menu where id = #{id}
+    </delete>
+
+    <!--代码开始-->
+    <select id="getMenus" resultMap="TbMenuMap">
+        select
+          id, number, parent_number, name, remark, url, create_time, update_time, update_user
+        from kaishun.tb_menu
+    </select>
+
+    <select id="getMenusByUserId" resultMap="TbMenuMap">
+      select
+          distinct tm.id, tm.number, tm.parent_number, tm.name, tm.remark, tm.url, tm.create_time, tm.update_time, tm.update_user
+        from kaishun.tb_menu tm
+        left join kaishun.tb_role_menu trm on trm.menu_id=tm.id
+        right join kaishun.tb_user_role tur on tur.role_id=trm.role_id
+        where tur.user_id=#{userId} order by tm.number
+    </select>
+
+    <select id="findAll" resultMap="TbMenuMap">
+        select
+          id, number, parent_number, name, remark, url, create_time, update_time, update_user
+        from kaishun.tb_menu
+    </select>
+
+    <select id="getMenuByName" resultMap="TbMenuMap">
+        select
+          id, number, parent_number, name, remark, url, create_time, update_time, update_user
+        from kaishun.tb_menu
+        where name like #{name}
+
+    </select>
+
+    <select id="getMenusByRoleId" resultMap="TbMenuMap">
+        select
+          tm.id, tm.number, tm.parent_number, tm.name, tm.remark, tm.url, tm.create_time, tm.update_time, tm.update_user
+        from kaishun.tb_menu tm,kaishun.tb_role_menu trm
+        where tm.id=trm.menu_id and trm.role_id=#{roleId}
+
+    </select>
+
+    <select id="findByParentNumber" resultMap="TbMenuMap">
+        select
+          id, number, parent_number, name, remark, url, create_time, update_time, update_user
+        from kaishun.tb_menu
+        where parent_number = #{parentNumber}
+
+    </select>
+
+    <select id="getMenusByParentNumbers" resultMap="TbMenuMap">
+        select
+          id, number, parent_number, name, remark, url, create_time, update_time, update_user
+        from kaishun.tb_menu
+        where parent_number in
+        <foreach collection="parentNumbers" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </select>
+
+</mapper>

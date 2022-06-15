@@ -1,0 +1,79 @@
+server:
+  port: 9001
+
+
+
+spring:
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+  freemarker:
+    suffix: .html
+    cache: false
+  datasource:
+    name: kaishun #数据库名称
+    type: com.alibaba.druid.pool.DruidDataSource
+    #druid相关配置
+    druid:
+      #监控统计拦截的filters
+      filters: stat
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      #基本属性
+      url: jdbc:mysql://127.0.0.1:3306/kaishun?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      username: root
+      password: cs205000030
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8 #连接池最大连接数（使用负值表示没有限制）（默认值）
+        max-wait: -1ms #连接池最大阻塞等待时间（使用负值表示没有限制）（默认值）
+        max-idle: 8 #连接池中的最大空闲连接（默认值）
+        min-idle: 0 #连接池中的最小空闲连接（默认值）
+    timeout: 10000ms #连接超时时间（毫秒）
+    database: 0 #数据位置（可从redis desktop manager中查看，默认就是0）
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
+
+
+mybatis:
+  configuration:
+    cache-enabled: false
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.kaishun.study.entity
+
+
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+logging:
+  level:
+    com.kaishun.study: DEBUG
+
+
+smsconfigure: #自定义smsconfigure配置
+  regionId:  #你的regionId
+  accessKeyID:  #你的accessKeyID
+  accessKeySecret:  #你的accessKeySecret
+  signName:   #你的signName
+  templateCode:  #你的templateCode
+
+
+swagger:
+  enable: true
+
+
+
+
+
