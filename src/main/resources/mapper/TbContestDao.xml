@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishun.study.dao.TbContestDao">
+
+    <resultMap type="com.kaishun.study.entity.TbContest" id="TbContestMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="contestName" column="contest_name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="contestTime" column="contest_time" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbContestMap">
+        select *
+        from tb_contest
+        where id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbContestMap">
+        select
+        *
+        from tb_contest
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="contest_name != null and contest_name != ''">
+                and contest_name = #{contestName}
+            </if>
+            <if test="type != null ">
+                and type = #{type}
+            </if>
+            <if test="contest_time != null and contest_time != ''">
+                and contest_time = #{contestTime}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_contest(id,contest_name, type, contest_time, remark)
+        values (#{id},#{contestName}, #{type}, #{contestTime}, #{remark})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update tb_contest
+        <set>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="contest_name != null and contest_name != ''">
+                and contest_name = #{contestName}
+            </if>
+            <if test="type != null ">
+                and type = #{type}
+            </if>
+            <if test="contest_time != null and contest_time != ''">
+                and contest_time = #{contestTime}
+            </if>
+            <if test="remark != null">
+                and remark = #{remark}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from tb_contest where id = #{id}
+    </delete>
+
+    <select id="findAll" resultMap="TbContestMap">
+        select
+            *
+        from tb_contest
+    </select>
+
+    <select id="getContestByName" resultMap="TbContestMap">
+        select
+        *
+        from tb_contest
+        where contest_name like #{contestName}
+
+    </select>
+
+</mapper>

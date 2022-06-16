@@ -1,6 +1,5 @@
 package com.kaishun.study.controller;
 
-import com.kaishun.study.dao.TbUserDao;
 import com.kaishun.study.entity.TbUser;
 import com.kaishun.study.enums.ResultEnum;
 import com.kaishun.study.service.TbRoleService;
@@ -10,8 +9,6 @@ import com.kaishun.study.utils.*;
 import com.kaishun.study.validator.JwtIgnore;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,22 +34,19 @@ public class TbUserController {
     private TbUserService tbUserService;
 
     @Resource
-    private TbUserDao tbUserDao;
-
-    @Resource
     private TbUserRoleService tbUserRoleService;
 
     @Resource
     private TbRoleService tbRoleService;
 
-    @Resource
-    private SqlSessionFactory sqlSessionFactory;
-
-    private Integer count=10;
-
-
-    private static final ThreadLocal<Integer> threadLocalTest = new ThreadLocal<>();
-    private static final ThreadLocal<String> threadLocalTest2 = new ThreadLocal<>();
+//    @Resource
+//    private SqlSessionFactory sqlSessionFactory;
+//
+//    private Integer count=10;
+//
+//
+//    private static final ThreadLocal<Integer> threadLocalTest = new ThreadLocal<>();
+//    private static final ThreadLocal<String> threadLocalTest2 = new ThreadLocal<>();
 
 
 
@@ -172,63 +166,63 @@ public class TbUserController {
         return ResultVOUtil.success(tbUser);
     }
 
-    @JwtIgnore
-    @GetMapping("/threadLocalTest")
-    public String threadLocalTest(Integer number){
-        if(threadLocalTest.get() == null){
-            threadLocalTest.set(number);
-            threadLocalTest2.set(number+"str");
-        }
-        Integer result = threadLocalTest.get();
-        String result2 = threadLocalTest2.get();
-        //一定要remove
-        threadLocalTest.remove();
-        threadLocalTest2.remove();
-        return result+"-"+result2;
-    }
+//    @JwtIgnore
+//    @GetMapping("/threadLocalTest")
+//    public String threadLocalTest(Integer number){
+//        if(threadLocalTest.get() == null){
+//            threadLocalTest.set(number);
+//            threadLocalTest2.set(number+"str");
+//        }
+//        Integer result = threadLocalTest.get();
+//        String result2 = threadLocalTest2.get();
+//        //一定要remove
+//        threadLocalTest.remove();
+//        threadLocalTest2.remove();
+//        return result+"-"+result2;
+//    }
 
-    @JwtIgnore
-    @GetMapping("/mybatisCache")
-    public void mybatisCache() {
-        log.info("会话一查询");
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        TbUserDao tbUserDao = sqlSession.getMapper(TbUserDao.class);
-        TbUser tbUser = tbUserDao.queryById("10001");
-        System.out.println(tbUser.toString());
-        sqlSession.commit();
-        log.info("创建会话二，会话二修改数据，此时会清除二级缓存");
-        SqlSession sqlSession2 = sqlSessionFactory.openSession();
-        TbUserDao tbUserDao2 = sqlSession2.getMapper(TbUserDao.class);
-        TbUser tbUser1 = new TbUser();
-        tbUser1.setId("10001");
-        tbUser1.setUserName("mybatis二级缓存");
-        tbUserDao2.update(tbUser1);
+//    @JwtIgnore
+//    @GetMapping("/mybatisCache")
+//    public void mybatisCache() {
+//        log.info("会话一查询");
+//        SqlSession sqlSession = sqlSessionFactory.openSession();
+//        TbUserDao tbUserDao = sqlSession.getMapper(TbUserDao.class);
+//        TbUser tbUser = tbUserDao.queryById("10001");
+//        System.out.println(tbUser.toString());
+//        sqlSession.commit();
+//        log.info("创建会话二，会话二修改数据，此时会清除二级缓存");
+//        SqlSession sqlSession2 = sqlSessionFactory.openSession();
+//        TbUserDao tbUserDao2 = sqlSession2.getMapper(TbUserDao.class);
+//        TbUser tbUser1 = new TbUser();
+//        tbUser1.setId("10001");
+//        tbUser1.setUserName("mybatis二级缓存");
+//        tbUserDao2.update(tbUser1);
+//
+//        log.info("会话二中查询结果，查数据库，放入二级缓存");
+//        TbUser tbUser2 = tbUserDao2.queryById("10001");
+//        System.out.println(tbUser2.toString());
+//        log.info("此处必须commit");
+//        sqlSession2.commit();
+//        log.info("会话一此时再查询，会从二级缓存中查询，不会走库");
+//        TbUser user = tbUserDao.queryById("10001");
+//        System.out.println(user.toString());
+//
+//    }
 
-        log.info("会话二中查询结果，查数据库，放入二级缓存");
-        TbUser tbUser2 = tbUserDao2.queryById("10001");
-        System.out.println(tbUser2.toString());
-        log.info("此处必须commit");
-        sqlSession2.commit();
-        log.info("会话一此时再查询，会从二级缓存中查询，不会走库");
-        TbUser user = tbUserDao.queryById("10001");
-        System.out.println(user.toString());
-
-    }
-
-    @JwtIgnore
-    @GetMapping("/testCount")
-    public List<Integer> testCount() {
-        List<Integer> count = tbUserDao.getCount();
-        return count;
-    }
-
-    @JwtIgnore
-    @GetMapping("/testSingle")
-    public Integer testSingle(Integer num) {
-        this.count += num;
-        System.out.println(count);
-        return count;
-    }
+//    @JwtIgnore
+//    @GetMapping("/testCount")
+//    public List<Integer> testCount() {
+//        List<Integer> count = tbUserDao.getCount();
+//        return count;
+//    }
+//
+//    @JwtIgnore
+//    @GetMapping("/testSingle")
+//    public Integer testSingle(Integer num) {
+//        this.count += num;
+//        System.out.println(count);
+//        return count;
+//    }
 
 
 
