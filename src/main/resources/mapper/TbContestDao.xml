@@ -26,13 +26,13 @@
             <if test="id != null and id != ''">
                 and id = #{id}
             </if>
-            <if test="contest_name != null and contest_name != ''">
+            <if test="contestName != null and contestName != ''">
                 and contest_name = #{contestName}
             </if>
             <if test="type != null ">
-                and type = #{type}
+                and `type` = #{type}
             </if>
-            <if test="contest_time != null and contest_time != ''">
+            <if test="contestTime != null and contestTime != ''">
                 and contest_time = #{contestTime}
             </if>
             <if test="remark != null and remark != ''">
@@ -51,20 +51,17 @@
     <update id="update">
         update tb_contest
         <set>
-            <if test="id != null and id != ''">
-                and id = #{id}
-            </if>
-            <if test="contest_name != null and contest_name != ''">
-                and contest_name = #{contestName}
+            <if test="contestName != null and contestName != ''">
+                contest_name = #{contestName},
             </if>
             <if test="type != null ">
-                and type = #{type}
+                `type` = #{type},
             </if>
-            <if test="contest_time != null and contest_time != ''">
-                and contest_time = #{contestTime}
+            <if test="contestTime != null and contestTime != ''">
+                contest_time = #{contestTime},
             </if>
             <if test="remark != null">
-                and remark = #{remark}
+                remark = #{remark},
             </if>
         </set>
         where id = #{id}
