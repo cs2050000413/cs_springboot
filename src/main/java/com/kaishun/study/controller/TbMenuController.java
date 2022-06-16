@@ -38,6 +38,18 @@ public class TbMenuController {
     @Resource
     private TbMenuService tbMenuService;
 
+    @Autowired
+    private TokenUserService tokenUserService;
+
+    @Autowired
+    private TbUserRoleService tbUserRoleService;
+
+    @Autowired
+    private TbRoleMenuService tbRoleMenuService;
+
+    @Resource
+    private RedisService redisService;
+
     /**
      * 通过主键查询单条数据
      *

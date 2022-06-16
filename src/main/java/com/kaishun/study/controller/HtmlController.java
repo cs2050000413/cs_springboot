@@ -19,12 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HtmlController {
 
     @JwtIgnore
-    @RequestMapping("/contest")
-    public String getContest() {
-        return "contest/contestIndex";
-    }
-
-    @JwtIgnore
     @RequestMapping("/user")
     public String getUser() {
         return "user/index";
