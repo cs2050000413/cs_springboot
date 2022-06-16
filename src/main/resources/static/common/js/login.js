@@ -45,11 +45,6 @@ function register() {
     openForm("注册用户",true,false,true,['700','400'],obj);
 }
 
-function forgetPassword() {
-    var obj = $("#forgetPassword");
-    openForm("忘记密码",true,false,true,['700','400'],obj);
-}
-
 function forgetPasswordSubmit() {
     AsyncPost("/tbUser/forgetPassword",$("#forgetPasswordForm").serialize(),function (data) {
         layer.alert(data.message,function(){

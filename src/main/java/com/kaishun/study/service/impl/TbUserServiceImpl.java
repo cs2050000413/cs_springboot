@@ -124,10 +124,20 @@ public class TbUserServiceImpl implements TbUserService {
         return this.tbUserDao.deleteById(id) > 0;
     }
 
+//
+//    @Override
+//    public List<TbUser> findAll() {
+//        return tbUserDao.findAll();
+//    }
 
     @Override
-    public List<TbUser> findAll() {
-        return tbUserDao.findAll();
+    public List<TbUser> getStudentList() {
+        return tbUserDao.findStudent();
+    }
+
+    @Override
+    public List<TbUser> getTeacherList() {
+        return tbUserDao.findTeacher();
     }
 
     @Override

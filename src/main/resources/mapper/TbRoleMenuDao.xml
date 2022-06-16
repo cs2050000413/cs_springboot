@@ -88,7 +88,6 @@
         delete from kaishun.tb_role_menu where id = #{id}
     </delete>
 
-    <!--****************************begin****************************-->
     <select id="findMenuIdByRoleIds" resultMap="TbRoleMenuMap">
       select
           id, role_id, menu_id, create_time, update_time, update_user
@@ -108,7 +107,7 @@
     </select>
 
     <delete id="deleteByRoleId">
-        delete from kaishun.tb_role_menu where role_id = #{roleId}
+        delete from tb_role_menu where role_id = #{roleId}
     </delete>
 
     <select id="findByMenuIdsAndRole" resultMap="TbRoleMenuMap">

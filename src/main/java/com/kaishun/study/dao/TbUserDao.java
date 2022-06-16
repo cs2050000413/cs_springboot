@@ -68,6 +68,10 @@ public interface TbUserDao {
      */
     List<TbUser> findAll();
 
+    List<TbUser> findStudent();
+
+    List<TbUser> findTeacher();
+
     TbUser login(TbUser tbUser);
 
     void updatePasswordByPhone(@Param("phone") String phone,@Param("password") String password);

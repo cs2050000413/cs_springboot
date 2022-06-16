@@ -63,9 +63,9 @@ layui.use(["table"],function(){
 //提交表单
 function formSubmit(obj){
     debugger
-    var type;
-    if($("#id").val()=="") type = "post";else type = "put";
-    AsyncAjax(type,"/tbMenu/setMenu",$("#menuForm").serialize(),function (data) {
+    var url;
+    if($("#id").val()=="") url = "/tbMenu/setMenu";else url = "/tbMenu/updateMenu";
+    AsyncAjax("post",url,$("#menuForm").serialize(),function (data) {
         if (data.code == 0) {
             layer.alert(data.message,function(){
                 layer.closeAll();

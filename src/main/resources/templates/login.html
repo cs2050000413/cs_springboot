@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>springboot+layui Demo</title>
+    <title>大学生竞赛管理信息服务系统</title>
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="icon" href="common/images/kaishun.jpg" type="image/x-icon" />
     <script src="layui/layui.js"></script>
@@ -36,11 +36,11 @@
         margin: 0;
     }
 </style>
-<body background="common\images\banner.jpg" >
+<body background="common\images\1.jpg" >
 <div class="layui-container" style="height: 100%">
 
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30%">
-        <legend style="margin-left: 40%"><span style="font-weight: bold;font-size:22px;color:white">springboot+layui Demo</span></legend>
+        <legend style="margin-left: 40%"><span style="font-weight: bold;font-size:22px;color:white">大学生竞赛管理信息服务系统</span></legend>
     </fieldset>
 
     <div class="layui-row">
@@ -67,7 +67,6 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label" style="margin-left: 10%;"></label>
                         <div class="layui-input-inline">
-                            <a href="#" class="link forget" onclick="forgetPassword()">忘记密码</a>
                             <a href="#" class="link register" onclick="register()">注册</a>
                         </div>
                     </div>
@@ -114,13 +113,6 @@
                     <input id="phone" name="phone" lay-verify="required" autocomplete="off" class="layui-input" type="number"/>
                 </div>
             </div>
-<!--            <div class="layui-form-item">-->
-<!--                <label class="layui-form-label">验证码</label>-->
-<!--                <div class="layui-input-inline">-->
-<!--                    <input id="verificationCode" name="verificationCode" lay-verify="required" autocomplete="off" class="layui-input" type="number"/>-->
-<!--                </div>-->
-<!--                <button class="layui-btn layui-btn-normal" type="button" onclick="getVerificationCode('register')">获取验证码</button>-->
-<!--            </div>-->
             <div class="layui-form-item">
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-inline">
@@ -142,40 +134,6 @@
             </div>
         </form>
     </div>
-    <!--注册用户 end-->
-
-    <!--忘记密码 begin-->
-<!--    <div id="forgetPassword" class="layer_self_wrap" style="padding: 20px;display:none;">-->
-<!--        <form id="forgetPasswordForm" class="layui-form layui-form-pane" method="post" action="" style="margin-top: 20px;">-->
-
-<!--&lt;!&ndash;            <div class="layui-form-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                <label class="layui-form-label">您的手机号</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="layui-input-inline">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <input id="forgetPasswordPhone" name="forgetPhone" lay-verify="required" autocomplete="off" class="layui-input" type="number"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            <div class="layui-form-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                <label class="layui-form-label">验证码</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="layui-input-inline">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <input id="forgetVerificationCode" name="forgetVerificationCode" lay-verify="required" autocomplete="off" class="layui-input" type="number"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                <button class="layui-btn layui-btn-normal" type="button" onclick="getVerificationCode('forgetPassword')">获取验证码</button>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--            <div class="layui-form-item">-->
-<!--                <label class="layui-form-label">新密码</label>-->
-<!--                <div class="layui-input-inline">-->
-<!--                    <input id="newPassword" name="newPassword" lay-verify="required" autocomplete="off" class="layui-input" type="text"/>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="layui-form-item">-->
-<!--                <div class="layui-input-block" style="margin-left: 10px;">-->
-<!--                    <button class="layui-btn"  lay-submit="" lay-filter="forgetPassword">提交</button>-->
-<!--                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-    <!--忘记密码 end-->
 </div>
 </body>
 

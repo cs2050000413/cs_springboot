@@ -25,6 +25,18 @@ public class HtmlController {
     }
 
     @JwtIgnore
+    @RequestMapping("/student")
+    public String getUser1() {
+        return "user/student";
+    }
+
+    @JwtIgnore
+    @RequestMapping("/teacher")
+    public String getUser2() {
+        return "user/teacher";
+    }
+
+    @JwtIgnore
     @RequestMapping("/role")
     public String getRole() {
         return "role/roleIndex";

@@ -6,7 +6,6 @@ import com.kaishun.study.enums.ResultEnum;
 import com.kaishun.study.service.TbRoleService;
 import com.kaishun.study.service.TbUserRoleService;
 import com.kaishun.study.service.TbUserService;
-import com.kaishun.study.test.AsyncTest;
 import com.kaishun.study.utils.*;
 import com.kaishun.study.validator.JwtIgnore;
 import io.swagger.annotations.ApiOperation;
@@ -16,9 +15,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.crypto.Mac;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -50,10 +46,6 @@ public class TbUserController {
     private TbRoleService tbRoleService;
 
     @Resource
-    private AsyncTest asyncTest;
-
-
-    @Resource
     private SqlSessionFactory sqlSessionFactory;
 
     private Integer count=10;
@@ -76,17 +68,24 @@ public class TbUserController {
         return this.tbUserService.queryById(id);
     }
 
-
-    /**************************begin**************************/
-    /**
-     * @description 获取用户信息
-     * @author zhoukaishun
-     * @date 2020/2/14 13:04
-     */
     @PostMapping("/getList")
     public ResultVO getUserList() {
         log.info("获取所有用户信息");
         List<TbUser> list = tbUserService.getUserList();
+        return ResultVOUtil.success(list);
+    }
+
+    @PostMapping("/getStudent")
+    public ResultVO getStudentList() {
+        log.info("获取所有学生信息");
+        List<TbUser> list = tbUserService.getStudentList();
+        return ResultVOUtil.success(list);
+    }
+
+    @PostMapping("/getTeacher")
+    public ResultVO getTeacherList() {
+        log.info("获取所有教师信息");
+        List<TbUser> list = tbUserService.getTeacherList();
         return ResultVOUtil.success(list);
     }
 

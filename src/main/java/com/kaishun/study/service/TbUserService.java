@@ -59,12 +59,7 @@ public interface TbUserService {
      */
     boolean deleteById(String id);
 
-    /**
-     * @description 获取所有用户
-     * @author zhoukaishun
-     * @date 2020/2/18 13:24
-     */
-    List<TbUser> findAll();
+//    List<TbUser> findAll();
 
     String login(HttpServletResponse response, TbUser tbUser);
 
@@ -88,6 +83,10 @@ public interface TbUserService {
     TbUser getUserInfo(HttpServletRequest request);
 
     List<TbUser> getUserList();
+
+    List<TbUser> getStudentList();
+
+    List<TbUser> getTeacherList();
 
     TbUser queryByUserName(String userName);
 

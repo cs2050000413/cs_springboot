@@ -33,7 +33,7 @@ public class TbUserMap implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         logger.info("用户信息缓存");
-        tbUserService.findAll().stream().forEach(tbUser->tbUserMap.put(tbUser.getId(),tbUser));
+        tbUserService.getUserList().stream().forEach(tbUser->tbUserMap.put(tbUser.getId(),tbUser));
     }
 
     public TbUser get(String id){

@@ -82,7 +82,7 @@ public class TbMenuController {
         return ResultVOUtil.success();
     }
 
-    @PutMapping("/setMenu")
+    @PostMapping("/updateMenu")
     public ResultVO updateMenu(HttpServletRequest request,TbMenu tbMenu){
         logger.info("更新菜单");
         tbMenuService.update(tbMenu,request);
