@@ -51,7 +51,7 @@
             <if test="remark != null and remark != ''">
                 and remark = #{remark}
             </if>
-            <if test="url != null">
+            <if test="url != null and url != ''">
                 and url = #{url}
             </if>
             <if test="createTime != null and createTime != ''">
