@@ -40,7 +40,7 @@ public interface TbMenuService {
      * @param tbMenu 实例对象
      * @return 实例对象
      */
-    TbMenu insert(TbMenu tbMenu,HttpServletRequest request);
+    boolean insert(TbMenu tbMenu,HttpServletRequest request);
 
     /**
      * 修改数据

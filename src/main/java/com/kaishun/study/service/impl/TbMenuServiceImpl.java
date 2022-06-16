@@ -66,10 +66,12 @@ public class TbMenuServiceImpl implements TbMenuService {
      * @return 实例对象
      */
     @Override
-    public TbMenu insert(TbMenu tbMenu,HttpServletRequest request) {
+    public boolean insert(TbMenu tbMenu,HttpServletRequest request) {
         commonUtils.initTbData(tbMenu,true);
-        this.tbMenuDao.insert(tbMenu);
-        return tbMenu;
+        if(this.tbMenuDao.insert(tbMenu)==1)
+            return true;
+        else
+            return false;
     }
 
     /**

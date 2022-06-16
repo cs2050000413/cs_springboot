@@ -106,6 +106,10 @@
 
     </select>
 
+    <delete id="deleteByMenuId">
+        delete from tb_role_menu where menu_id = #{menuId}
+    </delete>
+
     <delete id="deleteByRoleId">
         delete from tb_role_menu where role_id = #{roleId}
     </delete>

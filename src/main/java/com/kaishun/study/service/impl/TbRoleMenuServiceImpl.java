@@ -56,9 +56,11 @@ public class TbRoleMenuServiceImpl implements TbRoleMenuService {
      * @return 实例对象
      */
     @Override
-    public TbRoleMenu insert(TbRoleMenu tbRoleMenu) {
-        this.tbRoleMenuDao.insert(tbRoleMenu);
-        return tbRoleMenu;
+    public boolean insert(TbRoleMenu tbRoleMenu) {
+        if(this.tbRoleMenuDao.insert(tbRoleMenu)==1)
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -73,6 +75,15 @@ public class TbRoleMenuServiceImpl implements TbRoleMenuService {
         return this.queryById(tbRoleMenu.getId());
     }
 
+    @Override
+    public boolean deleteByMenuId(String id) {
+        return this.tbRoleMenuDao.deleteByMenuId(id) > 0;
+    }
+
+    @Override
+    public boolean deleteByRoleId(String id) {
+        return this.tbRoleMenuDao.deleteByRoleId(id) > 0;
+    }
     /**
      * 通过主键删除数据
      *

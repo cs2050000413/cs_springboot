@@ -2,6 +2,7 @@ package com.kaishun.study.controller;
 
 import com.kaishun.study.entity.TbContest;
 import com.kaishun.study.service.TbContestService;
+import com.kaishun.study.service.TbContestWinService;
 import com.kaishun.study.utils.CommonUtils;
 import com.kaishun.study.utils.DateUtil;
 import com.kaishun.study.utils.ResultVO;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,10 +23,13 @@ import java.util.List;
 public class TbContestController {
 
     @Autowired
+    TbContestWinService tbContestWinService;
+
+    @Autowired
     TbContestService tbContestService;
 
     @PostMapping("/getContest")
-    public ResultVO getUserList() {
+    public ResultVO getContestList() {
         log.info("获取所有竞赛信息");
         List<TbContest> list = tbContestService.getList();
         return ResultVOUtil.success(list);
@@ -43,11 +46,10 @@ public class TbContestController {
     public ResultVO deleteContestById(String id) {
         log.info("删除用户，id={}", id);
         tbContestService.deleteById(id);
-        return ResultVOUtil.success();
-//        if(tbContestService.deleteById(tbContestService.findContestByUserId(id).getId()))
-//            return ResultVOUtil.success();
-//        else
-//            return ResultVOUtil.error(0,"删除失败！");
+        if(tbContestWinService.deleteByContestId(id))
+            return ResultVOUtil.success();
+        else
+            return ResultVOUtil.error(0,"删除失败！");
     }
 
     @PostMapping("/setContest")
@@ -61,7 +63,7 @@ public class TbContestController {
 
     @PostMapping("/updateContest")
     public ResultVO updateUser(TbContest contest) {
-        log.info("更新用户");
+        log.info("更新竞赛信息");
         tbContestService.update(contest);
         return ResultVOUtil.success();
     }

@@ -8,7 +8,7 @@ public interface TbContestDao {
 
     List<TbContest> findAll();
 
-    TbContest findById(String id);
+    TbContest queryById(String id);
 
     List<TbContest> queryAll(TbContest tbContest);
 

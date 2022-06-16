@@ -19,6 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HtmlController {
 
     @JwtIgnore
+    @RequestMapping("/contestWin")
+    public String getContestWin() {
+        return "contest/contestWinIndex";
+    }
+
+    @JwtIgnore
     @RequestMapping("/contest")
     public String getContest() {
         return "contest/contestIndex";

@@ -43,7 +43,7 @@ public class TbContestServiceImpl implements TbContestService {
      */
     @Override
     public TbContest queryById(String id) {
-        return this.tbContestDao.findById(id);
+        return this.tbContestDao.queryById(id);
     }
 
     /**

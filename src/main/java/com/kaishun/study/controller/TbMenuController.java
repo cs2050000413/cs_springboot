@@ -2,15 +2,9 @@ package com.kaishun.study.controller;
 
 import com.kaishun.study.Result.MenuTreeResult;
 import com.kaishun.study.Result.RoleMenuResult;
-import com.kaishun.study.entity.TbMenu;
-import com.kaishun.study.entity.TbRoleMenu;
-import com.kaishun.study.entity.TbUser;
-import com.kaishun.study.entity.TbUserRole;
+import com.kaishun.study.entity.*;
 import com.kaishun.study.service.*;
-import com.kaishun.study.utils.PageRequest;
-import com.kaishun.study.utils.PageResult;
-import com.kaishun.study.utils.ResultVO;
-import com.kaishun.study.utils.ResultVOUtil;
+import com.kaishun.study.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +31,9 @@ public class TbMenuController {
      */
     @Resource
     private TbMenuService tbMenuService;
+
+    @Resource
+    private TbRoleMenuService tbRoleMenuService;
 
     /**
      * 通过主键查询单条数据
@@ -67,7 +64,17 @@ public class TbMenuController {
     public ResultVO addMenu(HttpServletRequest request,TbMenu tbMenu){
         logger.info("新增菜单");
         tbMenuService.insert(tbMenu,request);
-        return ResultVOUtil.success();
+        TbRoleMenu tbRoleMenu = new TbRoleMenu();
+        tbRoleMenu.setId(new CommonUtils().getUUID32());
+        tbRoleMenu.setMenuId(tbMenu.getId());
+        tbRoleMenu.setRoleId("10001");
+        tbRoleMenu.setCreateTime(DateUtil.get14Date());
+        tbRoleMenu.setUpdateTime(DateUtil.get14Date());
+        tbRoleMenu.setUpdateUser("admin");
+        if(tbRoleMenuService.insert(tbRoleMenu))
+            return ResultVOUtil.success();
+        else
+            return ResultVOUtil.error(0,"错误！");
     }
 
     @PostMapping("/updateMenu")
@@ -86,8 +93,10 @@ public class TbMenuController {
     @DeleteMapping("/delete")
     public ResultVO deleteById(String id){
         logger.info("删除菜单");
-        tbMenuService.deleteById(id);
-        return ResultVOUtil.success();
+        if(tbMenuService.deleteById(id) && tbRoleMenuService.deleteByMenuId(id))
+            return ResultVOUtil.success();
+        else
+            return ResultVOUtil.error(0,"错误！");
     }
 
     @PostMapping("/getPermission")

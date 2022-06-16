@@ -38,7 +38,7 @@ public interface TbRoleMenuService {
      * @param tbRoleMenu 实例对象
      * @return 实例对象
      */
-    TbRoleMenu insert(TbRoleMenu tbRoleMenu);
+    boolean insert(TbRoleMenu tbRoleMenu);
 
     /**
      * 修改数据
@@ -55,6 +55,10 @@ public interface TbRoleMenuService {
      * @return 是否成功
      */
     boolean deleteById(String id);
+
+    boolean deleteByRoleId(String id);
+
+    boolean deleteByMenuId(String id);
 
     List<TbRoleMenu> findMenuIdByRoleIds(List<String> roleIds);
 

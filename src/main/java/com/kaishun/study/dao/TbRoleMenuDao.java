@@ -62,12 +62,14 @@ public interface TbRoleMenuDao {
      */
     int deleteById(String id);
 
+    int deleteByMenuId(String id);
+
     List<TbRoleMenu> findMenuIdByRoleIds(@Param("roleIds") List<String> roleIds);
 
 
     TbRoleMenu findByMenuIdAndRoleId(@Param("menuId") String menuId, @Param("roleId") String roleId);
 
-    void deleteByRoleId(String roleId);
+    int deleteByRoleId(String roleId);
 
     List<TbRoleMenu> findByMenuIdsAndRole(@Param("menuIds")List<String> menuIds,@Param("roleId")String roleId);
 }

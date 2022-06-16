@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaishun.study.dao.TbContestWinDao">
+
+    <resultMap type="com.kaishun.study.entity.TbContestWin" id="TbContestWinMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="contestName" column="contest_name" jdbcType="VARCHAR"/>
+        <result property="contestId" column="contest_id" jdbcType="VARCHAR"/>
+        <result property="contestType" column="type" jdbcType="VARCHAR"/>
+        <result property="contestTime" column="contest_time" jdbcType="VARCHAR"/>
+        <result property="winType" column="win_type" jdbcType="VARCHAR"/>
+        <result property="winTime" column="win_time" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbContestWinMap">
+        select
+            distinct s.id,s.contest_id,c.contest_name,c.type,c.contest_time,s.win_type,s.win_time,s.remark
+        from tb_contest_winning s
+                 left join tb_contest c on s.contest_id=c.id
+        where id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TbContestWinMap">
+        select
+        distinct s.id,s.contest_id,c.contest_name,c.type,c.contest_time,s.win_type,s.win_time,s.remark
+        from tb_contest_winning s
+        left join tb_contest c on s.contest_id=c.id
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="contestName != null and contestName != ''">
+                and contest_name = #{contestName}
+            </if>
+            <if test="contestType != null and contestType != ''">
+                and `type` = #{contestType}
+            </if>
+            <if test="winType != null and winType != ''">
+                and win_type = #{winType}
+            </if>
+            <if test="winTime != null and winTime != ''">
+                and win_time = #{winTime}
+            </if>
+
+            <if test="contestTime != null and contestTime != ''">
+                and contest_time = #{contestTime}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_contest_winning(id,contest_id, win_type, win_time, remark)
+        values (#{id},#{contestId}, #{winType}, #{winTime}, #{remark})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update tb_contest_winning
+        <set>
+            <if test="winType != null ">
+                win_type = #{winType},
+            </if>
+            <if test="winTime != null ">
+                win_time = #{winTime},
+            </if>
+            <if test="contestId != null and contestId != ''">
+                contest_id = #{contestId},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from tb_contest_winning where id = #{id}
+    </delete>
+
+    <!--通过竞赛ID删除-->
+    <delete id="deleteByContestId">
+        delete from tb_contest_winning where contest_id = #{contestId}
+    </delete>
+
+    <select id="findAll" resultMap="TbContestWinMap">
+        select
+            distinct s.id,s.contest_id,c.contest_name,c.type,c.contest_time,s.win_type,s.win_time,s.remark
+        from tb_contest_winning s
+                 left join tb_contest c on s.contest_id=c.id
+    </select>
+
+    <select id="getContestWinByName" resultMap="TbContestWinMap">
+        select
+            distinct s.id,s.contest_id,c.contest_name,c.type,c.contest_time,s.win_type,s.win_time,s.remark
+        from tb_contest_winning s
+                 left join tb_contest c on s.contest_id=c.id
+        where contest_name like #{contestName}
+
+    </select>
+
+</mapper>
