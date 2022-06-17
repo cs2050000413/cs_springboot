@@ -124,11 +124,6 @@ public class TbUserServiceImpl implements TbUserService {
         return this.tbUserDao.deleteById(id) > 0;
     }
 
-//
-//    @Override
-//    public List<TbUser> findAll() {
-//        return tbUserDao.findAll();
-//    }
 
     @Override
     public List<TbUser> getStudentList() {
@@ -159,18 +154,6 @@ public class TbUserServiceImpl implements TbUserService {
         return token;
     }
 
-//    @Override
-//    public void updatePasswordByPhone(String forgetPhone, String newPassword) {
-//        String password = StrToMd5.Md5(newPassword);
-//        tbUserDao.updatePasswordByPhone(forgetPhone, password);
-//
-//    }
-
-//    @Override
-//    public TbUser findTbUserByPhone(String forgetPhone) {
-//        return tbUserDao.findTbUserByPhone(forgetPhone);
-//    }
-
     @Override
     public String getUserNameByToken(String token) {
         //此处也可用JwtTokenUtil获取更加方便，但是此处因为JWT是我后面加的，这里就没做修改
@@ -184,21 +167,6 @@ public class TbUserServiceImpl implements TbUserService {
     public List<TbUser> getUserByName(String name) {
         return tbUserDao.getUserByName("%" + name + "%");
     }
-
-//    @Override
-//    public ResultVO forgetPassword(ForgetInfo info) {
-//        if (smsUtils.verification(info.getForgetPhone(), info.getForgetVerificationCode())) {
-//            TbUser tbUser = tbUserDao.findTbUserByPhone(info.getForgetPhone());
-//            if (tbUser == null) {
-//                return ResultVOUtil.error(ResultEnum.PHONE_NOT_BIND_USER);
-//            }
-//            info.setNewPassword(StrToMd5.Md5(info.getNewPassword()));
-//            tbUserDao.updatePasswordByPhone(info.getForgetPhone(), info.getNewPassword());
-//            return ResultVOUtil.success();
-//        } else {
-//            return ResultVOUtil.error(ResultEnum.PHONE_CODE_ERROR);
-//        }
-//    }
 
     @Override
     public void register(TbUser user, String checkCode) {

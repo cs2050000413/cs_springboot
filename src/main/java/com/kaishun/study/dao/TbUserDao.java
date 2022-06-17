@@ -7,8 +7,6 @@ import java.util.List;
 /**
  * (TbUser)表数据库访问层
  *
- * @author makejava
- * @since 2020-02-14 12:54:28
  */
 public interface TbUserDao {
 
@@ -63,8 +61,6 @@ public interface TbUserDao {
     int deleteById(String id);
     /**
      * @description 获取用户列表
-     * @author zhoukaishun
-     * @date 2020/2/14 13:12
      */
     List<TbUser> findAll();
 
@@ -73,8 +69,6 @@ public interface TbUserDao {
     List<TbUser> findTeacher();
 
     TbUser login(TbUser tbUser);
-
-    void updatePasswordByPhone(@Param("phone") String phone,@Param("password") String password);
 
     TbUser findTbUserByPhone(String phone);
 

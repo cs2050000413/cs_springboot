@@ -6,6 +6,7 @@ import com.kaishun.study.entity.TbUser;
 import com.kaishun.study.info.RoleMenuInfo;
 import com.kaishun.study.service.RedisService;
 import com.kaishun.study.service.TbRoleService;
+import com.kaishun.study.service.TbUserRoleService;
 import com.kaishun.study.service.TbUserService;
 import com.kaishun.study.utils.PageRequest;
 import com.kaishun.study.utils.PageResult;
@@ -35,6 +36,10 @@ public class TbRoleController {
     /**
      * 服务对象
      */
+
+    @Resource
+    private TbUserRoleService tbUserRoleService;
+
     @Resource
     private TbRoleService tbRoleService;
 
@@ -60,6 +65,12 @@ public class TbRoleController {
     @DeleteMapping("/delete")
     public ResultVO deleteById(String id){
         log.info("删除角色");
+        try {
+            if (tbUserRoleService.findRoleByUserId(id) != null)
+                return ResultVOUtil.error(0,"存在用户使用该角色，请先删除用户！");
+        }catch (Exception e){
+            return ResultVOUtil.error(0,"存在用户使用该角色，请先删除用户！");
+        }
         tbRoleService.deleteById(id);
         return ResultVOUtil.success();
     }

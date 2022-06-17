@@ -39,16 +39,6 @@ public class TbUserController {
     @Resource
     private TbRoleService tbRoleService;
 
-//    @Resource
-//    private SqlSessionFactory sqlSessionFactory;
-//
-//    private Integer count=10;
-//
-//
-//    private static final ThreadLocal<Integer> threadLocalTest = new ThreadLocal<>();
-//    private static final ThreadLocal<String> threadLocalTest2 = new ThreadLocal<>();
-
-
 
     /**
      * 通过主键查询单条数据
@@ -105,7 +95,7 @@ public class TbUserController {
     @JwtIgnore
     @PostMapping("/registerUser")
     @ApiOperation("用户注册")
-    public ResultVO register(@Valid TbUser user, String verificationCode,@Valid String checkCode) {
+    public ResultVO register(@Valid TbUser user,@Valid String checkCode) {
         if(!tbRoleService.checkCodeRight(checkCode))
             return ResultVOUtil.error(0,"校验码错误！");
         tbUserService.register(user, checkCode);
@@ -120,23 +110,23 @@ public class TbUserController {
 //    }
 
     @PostMapping("/setUser")
-    public ResultVO addUser(@Valid TbUser user,@Valid String roleid) {
+    public ResultVO addUser(@Valid TbUser user,@Valid String roleId) {
         log.info("新增用户");
-        if(roleid==null)
+        if(roleId==null)
             return ResultVOUtil.error(0,"权限id为空！");
         try{
-            tbRoleService.queryById(roleid).getName();
+            tbRoleService.queryById(roleId).getName();
         }catch(NullPointerException e){
             return ResultVOUtil.error(0,"权限id不存在！");
         }
         if(user.getUserPassword()==null)
             user.setUserPassword(StrToMd5.Md5("123456"));//设置默认密码123456
-        tbUserService.addUser(user,roleid);
+        tbUserService.addUser(user,roleId);
         return ResultVOUtil.success();
     }
 
     @PostMapping("/updateUser")
-    public ResultVO updateUser(HttpServletRequest request, @Valid TbUser user) {
+    public ResultVO updateUser(HttpServletRequest request,TbUser user) {
         log.info("更新用户");
         tbUserService.update(user, request);
         return ResultVOUtil.success();
