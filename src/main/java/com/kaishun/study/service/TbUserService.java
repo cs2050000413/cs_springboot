@@ -80,7 +80,14 @@ public interface TbUserService {
 
     void register(TbUser user, String checkCode);
 
+
     TbUser getUserInfo(HttpServletRequest request);
+
+    int findContestUserByUserId(String userId);
+
+    int addContestUser(String contestId,String userId);
+
+    int deleteContestUser(String userId);
 
     List<TbUser> getUserList();
 

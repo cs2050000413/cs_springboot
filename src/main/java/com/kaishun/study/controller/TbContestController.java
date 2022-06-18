@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,14 +43,21 @@ public class TbContestController {
         return ResultVOUtil.success(list);
     }
 
+    @RequestMapping("/getContestById")
+    @ApiOperation(value = "根据竞赛ID查询竞赛")
+    public ResultVO<List<TbContest>> getContestById(String contestId) {
+        List<TbContest> list = new ArrayList<>();
+        list.add( tbContestService.queryById(contestId));
+        return ResultVOUtil.success(list);
+    }
+
     @DeleteMapping("/delete")
     public ResultVO deleteContestById(String id) {
         log.info("删除用户，id={}", id);
+        if(tbContestWinService.queryByContestId(id)!=null)
+            return ResultVOUtil.error(0,"删除失败！存在获奖记录，请先删除获奖！");
         tbContestService.deleteById(id);
-        if(tbContestWinService.deleteByContestId(id))
-            return ResultVOUtil.success();
-        else
-            return ResultVOUtil.error(0,"删除失败！");
+        return ResultVOUtil.success();
     }
 
     @PostMapping("/setContest")

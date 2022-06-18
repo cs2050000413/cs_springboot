@@ -22,7 +22,10 @@ public class TbContestWinServiceImpl implements TbContestWinService {
     @Resource
     private CommonUtils commonUtils;
 
-
+    @Override
+    public TbContestWin queryByContestId(String contestId){
+        return this.tbContestWinDao.queryByContestId(contestId);
+    }
     /**
      * 通过ID查询单条数据
      *

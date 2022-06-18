@@ -5,6 +5,7 @@ var pageSize;
 var form;
 var table;
 
+
 function getContestByName() {
     var name = $("#search").val();
     AsyncPost("/tbContest/getContestByName/",{"name":name},function (data) {
@@ -28,10 +29,12 @@ function initTableByData(obj){
             ,{field: 'type', title: '类别', sort: true}
             ,{field: 'contestTime', title: '竞赛时间', sort: true}
             ,{field: 'remark', title: '备注'}
+            ,{title:'参赛人员',align:'center', width:200, toolbar:'#bar'}
             ,{fixed:'right',title:'操作',align:'center', width:200, toolbar:'#barDemo'}
         ]],
     });
 }
+
 
 layui.use(["table"],function(){
     table = layui.table;
@@ -51,6 +54,10 @@ layui.use(["table"],function(){
         } else  if(obj.event === 'edit'){
             //编辑
             edit(data);
+        }else if (obj.event === 'person'){
+            parent.contestId=data.id;//设置全局变量
+            //参赛人员
+            $("#content").load("/html/contestPerson");
         }
     });
 

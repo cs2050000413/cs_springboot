@@ -86,11 +86,34 @@ public class TbUserController {
         return ResultVOUtil.success(list);
     }
 
+    @PostMapping("/addContestUser")
+    public ResultVO addContestUser(String cid,String id){
+        log.info("添加竞赛用户");
+        if(tbUserService.queryById(id)==null)
+            return ResultVOUtil.error(0,"用户不存在！");
+        if(tbUserService.findContestUserByUserId(id)==1)
+            return ResultVOUtil.error(0,"用户已参赛！不可重复添加！");
+        if(tbUserService.addContestUser(cid,id)==1)
+            return ResultVOUtil.success();
+        else
+            return ResultVOUtil.error(0,"添加失败！");
+    }
+
+    @DeleteMapping("/deleteContestUser")
+    public ResultVO deleteContestUserById(String id) {
+        log.info("删除竞赛用户，id={}", id);
+        if(tbUserService.deleteContestUser(id)==1)
+            return ResultVOUtil.success();
+        else
+            return ResultVOUtil.error(0,"删除失败！");
+    }
 
     @DeleteMapping("/delete")
     public ResultVO deleteUserById(String id) {
         log.info("删除用户，id={}", id);
         tbUserService.deleteById(id);
+        if(tbUserService.findContestUserByUserId(id)==1)
+            return ResultVOUtil.error(0,"用户存在参与竞赛，请先退出竞赛再删除！");
         if(tbUserRoleService.deleteById(tbUserRoleService.findRoleByUserId(id).getId()))
             return ResultVOUtil.success();
         else

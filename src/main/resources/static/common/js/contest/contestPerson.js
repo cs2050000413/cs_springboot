@@ -17,10 +17,10 @@ function initTableByData1(obj){
         //设置不分页
         ,limit: Number.MAX_VALUE
         ,cols: [[ //表头
-            {field: 'id', title: 'ID',sort: true}
+            {field: 'id', title: 'ID'}
             ,{field: 'contestName', title: '竞赛名称', }
-            ,{field: 'type', title: '类别', sort: true}
-            ,{field: 'contestTime', title: '竞赛时间', sort: true}
+            ,{field: 'type', title: '类别'}
+            ,{field: 'contestTime', title: '竞赛时间'}
             ,{field: 'remark', title: '备注'}
         ]],
     });
@@ -54,7 +54,7 @@ layui.use(["table"],function(){
     AsyncPost("/tbUser/getPerson/?contestId="+id,{"pageNum":pageCurr,"pageSize":10},function (data) {
         initTableByData(data.data);
     })
-    AsyncPost("/tbContest/getContest/",{"pageNum":pageCurr,"pageSize":10},function (data) {
+    AsyncPost("/tbContest/getContestById/?contestId="+id,{"pageNum":pageCurr,"pageSize":10},function (data) {
         initTableByData1(data.data);
     })
 
@@ -65,9 +65,6 @@ layui.use(["table"],function(){
         if(obj.event === 'del'){
             //删除
             delUser(data,data.id);
-        } else  if(obj.event === 'edit'){
-            //编辑
-            edit(data);
         }
     });
     //监听提交
@@ -81,9 +78,9 @@ layui.use(["table"],function(){
 //提交表单
 function formSubmit(obj){
     var url;
-    if($("#id").val()=="自动生成"){
-        url = "/tbUser/setUser";
-        AsyncAjax("post",url,$("#userForm").serialize(),function (data) {
+    var cid = parent.contestId;
+        url = "/tbUser/addContestUser";
+        AsyncAjax("post",url, {"cid":cid,"id":document.getElementById("userId").value},function (data) {
             if (data.code == 0) {
                 layer.alert(data.message,function(){
                     layer.closeAll();
@@ -93,77 +90,43 @@ function formSubmit(obj){
                 layer.alert(data.message);
             }
         });
-    }
-
-    else{
-        url = "/tbUser/updateUser";
-        AsyncAjax("post",url,$("#userForm1").serialize(),function (data) {
-            if (data.code == 0) {
-                layer.alert(data.message,function(){
-                    layer.closeAll();
-                    load(obj);
-                });
-            } else {
-                layer.alert(data.message);
-            }
-        });
-    }
-
-
 }
 //
 // //新增
 // function add() {
-//     edit(null,"新增");
+//     alert("!");
+//     $("#cid").val(data.cid);
+//     form.render();
+//     var obj = $('#setContestUser');
+//     parent.openForm("新增",true,false,true,['400px','280px'],obj);
 // }
 
-//打开编辑框
-function edit(data,title){
-    if(data == null){
-        $("#id").val("自动生成");
-        var obj = $('#setUser');
-        openForm(title,true,false,true,['400px','520px'],obj);
-    }else{
-        //回显数据
-        $("#id1").val(data.id);
-        $("#userName1").val(data.userName);
-        $("#pname1").val(data.pname);
-        $("#age1").val(data.age);
-        $("#phone1").val(data.phone);
-        $("#sex1").val(data.sex);
-        form.render();
-        var obj = $('#setUser1');
-        openForm(title,true,false,true,['400px','480px'],obj);
+//删除
+function delUser(obj,id) {
+    if(null!=id){
+        layer.confirm('您确定要退选竞赛吗？', {
+            btn: ['确认','返回'] //按钮
+        }, function(){
+            AsyncDelete("/tbUser/deleteContestUser",{"id":id},function(req){
+                layer.alert(req.message,function(){
+                    layer.closeAll();
+                    load(obj);
+                });
+            });
+
+        }, function(){
+            layer.closeAll();
+        });
     }
-
 }
-
-//
-// //删除
-// function delUser(obj,id) {
-//     if(null!=id){
-//         layer.confirm('您确定要删除吗？', {
-//             btn: ['确认','返回'] //按钮
-//         }, function(){
-//             AsyncDelete("/tbUser/delete",{"id":id},function(req){
-//                 layer.alert(req.message,function(){
-//                     layer.closeAll();
-//                     load(obj);
-//                 });
-//             });
-//
-//         }, function(){
-//             layer.closeAll();
-//         });
-//     }
-// }
 
 //重新加载table
 function load(obj){
-    AsyncPost("/tbUser/getPerson/",{"pageNum":pageCurr,"pageSize":10},function (data) {
+    var id = parent.contestId;
+    AsyncPost("/tbUser/getPerson/?contestId="+id,{"pageNum":pageCurr,"pageSize":10},function (data) {
         initTableByData(data.data);
     })
-    AsyncPost("/tbContest/getContest/",{"pageNum":pageCurr,"pageSize":10},function (data) {
+    AsyncPost("/tbContest/getContestById/?contestId="+id,{"pageNum":pageCurr,"pageSize":10},function (data) {
         initTableByData1(data.data);
     })
 }

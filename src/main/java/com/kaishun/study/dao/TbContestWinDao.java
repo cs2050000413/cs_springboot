@@ -13,6 +13,8 @@ public interface TbContestWinDao {
 
     List<TbContestWin> queryAll(TbContestWin tbContestWin);
 
+    TbContestWin queryByContestId(String contestId);
+
     int deleteById(String id);
 
     int deleteByContestId(String id);

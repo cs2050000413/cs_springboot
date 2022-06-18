@@ -1,6 +1,7 @@
 package com.kaishun.study.service.impl;
 
 import com.kaishun.study.config.JWTConfig;
+import com.kaishun.study.dao.TbContestUserDao;
 import com.kaishun.study.entity.TbUser;
 import com.kaishun.study.dao.TbUserDao;
 import com.kaishun.study.entity.TbUserRole;
@@ -32,6 +33,9 @@ import java.util.List;
 public class TbUserServiceImpl implements TbUserService {
     @Resource
     private TbUserDao tbUserDao;
+
+    @Resource
+    private TbContestUserDao tbContestUserDao;
 
     @Resource
     private RedisService redisService;
@@ -126,6 +130,27 @@ public class TbUserServiceImpl implements TbUserService {
         return this.tbUserDao.deleteById(id) > 0;
     }
 
+    @Override
+    public int findContestUserByUserId(String userId){
+        if(tbContestUserDao.findByUserId(userId)>0)
+            return 1;
+        else
+            return 0;
+    }
+
+    @Override public int addContestUser(String contestId,String userId){
+        if(tbContestUserDao.insert(commonUtils.getUUID32(), contestId,userId)>0)
+            return 1;
+        else
+            return 0;
+    }
+
+    @Override public int deleteContestUser(String userId){
+        if(tbContestUserDao.deleteByUserId(userId)>0)
+            return 1;
+        else
+            return 0;
+    }
 
     @Override
     public List<TbUser> getStudentList() {

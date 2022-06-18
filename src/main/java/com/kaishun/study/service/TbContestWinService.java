@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface TbContestWinService {
 
+    TbContestWin queryByContestId(String contestId);
     /**
      * 通过ID查询单条数据
      *

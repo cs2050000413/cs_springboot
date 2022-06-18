@@ -31,6 +31,7 @@ function initTableByData(obj){
             ,{field: 'winType', title: '获奖类别', sort: true}
             ,{field: 'winTime', title: '获奖时间', sort: true}
             ,{field: 'remark', title: '备注'}
+            ,{title:'参赛人员',align:'center', width:200, toolbar:'#bar'}
             ,{fixed:'right',title:'操作',align:'center', width:200, toolbar:'#barDemo'}
         ]],
     });
@@ -54,6 +55,10 @@ layui.use(["table"],function(){
         } else  if(obj.event === 'edit'){
             //编辑
             edit(data);
+        }else if (obj.event === 'person'){
+            parent.contestId=data.contestId;//设置全局变量
+            //参赛人员
+            $("#content").load("/html/contestPerson");
         }
     });
 

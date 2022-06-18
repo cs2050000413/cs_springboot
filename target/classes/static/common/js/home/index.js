@@ -1,3 +1,5 @@
+var contestId;//全局变量 竞赛ID
+
 layui.use(['element','jquery'], function(){
     var element = layui.element;
     var $ = layui.jquery;
