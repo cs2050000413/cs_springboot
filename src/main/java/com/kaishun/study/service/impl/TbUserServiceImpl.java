@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -133,6 +135,17 @@ public class TbUserServiceImpl implements TbUserService {
     @Override
     public List<TbUser> getTeacherList() {
         return tbUserDao.findTeacher();
+    }
+
+    @Override
+    public List<TbUser> getUserByContestId(String contestId){
+
+        List<String> userId = tbUserDao.findUserInContest(contestId);
+        List<TbUser> list = new ArrayList<>();
+        for(int i=0;i<userId.size();i++){
+            list.add(tbUserDao.queryById(userId.get(i)));
+        }
+        return list;
     }
 
     @Override

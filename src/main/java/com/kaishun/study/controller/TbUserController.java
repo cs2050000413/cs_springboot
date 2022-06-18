@@ -58,6 +58,12 @@ public class TbUserController {
         List<TbUser> list = tbUserService.getUserList();
         return ResultVOUtil.success(list);
     }
+    @PostMapping("/getPerson")
+    public ResultVO getPersonList(String contestId){
+        log.info("获取参赛人员信息");
+        List<TbUser> list = tbUserService.getUserByContestId(contestId);
+        return ResultVOUtil.success(list);
+    }
 
     @PostMapping("/getStudent")
     public ResultVO getStudentList() {

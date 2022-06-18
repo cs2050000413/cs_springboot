@@ -5,6 +5,7 @@ var pageSize;
 var form;
 var table;
 
+
 function getUserByName() {
     var name = $("#search").val();
     AsyncPost("/tbUser/getUserByName/",{"name":name},function (data) {

@@ -5,16 +5,25 @@ var pageSize;
 var form;
 var table;
 
-
-function getUserByName() {
-    var name = $("#search").val();
-    AsyncPost("/tbUser/getUserByName/",{"name":name},function (data) {
-        initTableByData(data.data);
-
-    })
-}
 function changeImg() {
     $("#img1").attr("src","common/images/me.jpg");
+}
+
+
+function initTableByData1(obj){
+    tableIns=table.render({
+        elem:"#contestTable"
+        ,data:obj
+        //设置不分页
+        ,limit: Number.MAX_VALUE
+        ,cols: [[ //表头
+            {field: 'id', title: 'ID',sort: true}
+            ,{field: 'contestName', title: '竞赛名称', }
+            ,{field: 'type', title: '类别', sort: true}
+            ,{field: 'contestTime', title: '竞赛时间', sort: true}
+            ,{field: 'remark', title: '备注'}
+        ]],
+    });
 }
 
 function initTableByData(obj){
@@ -30,22 +39,23 @@ function initTableByData(obj){
             ,{field: 'phone', title: '手机号', }
             ,{field: 'sex', title: '性别', sort: true,templet:"#handleSex"}
             ,{field: 'age', title: '年龄', sort: true}
-            ,{field: 'roleId', title: '角色ID', sort: true}
             ,{field: 'role', title: '角色', sort: true}
-            ,{field: 'createTime', title: '创建时间', sort: true}
-            ,{field: 'updateTime', title: '修改时间', sort: true}
-            ,{field: 'updateUser', title: '修改人', sort: true}
             ,{fixed:'right',title:'操作',align:'center', width:200, toolbar:'#barDemo'}
         ]],
     });
 }
 
+
 layui.use(["table"],function(){
     table = layui.table;
     form = layui.form;
     form.render();
-    AsyncPost("/tbUser/getList/",{"pageNum":pageCurr,"pageSize":10},function (data) {
+    var id = parent.contestId;
+    AsyncPost("/tbUser/getPerson/?contestId="+id,{"pageNum":pageCurr,"pageSize":10},function (data) {
         initTableByData(data.data);
+    })
+    AsyncPost("/tbContest/getContest/",{"pageNum":pageCurr,"pageSize":10},function (data) {
+        initTableByData1(data.data);
     })
 
 
@@ -101,11 +111,11 @@ function formSubmit(obj){
 
 
 }
-
-//新增
-function add() {
-    edit(null,"新增");
-}
+//
+// //新增
+// function add() {
+//     edit(null,"新增");
+// }
 
 //打开编辑框
 function edit(data,title){
@@ -128,30 +138,33 @@ function edit(data,title){
 
 }
 
-
-//删除
-function delUser(obj,id) {
-    if(null!=id){
-        layer.confirm('您确定要删除吗？', {
-            btn: ['确认','返回'] //按钮
-        }, function(){
-            AsyncDelete("/tbUser/delete",{"id":id},function(req){
-                layer.alert(req.message,function(){
-                    layer.closeAll();
-                    load(obj);
-                });
-            });
-
-        }, function(){
-            layer.closeAll();
-        });
-    }
-}
+//
+// //删除
+// function delUser(obj,id) {
+//     if(null!=id){
+//         layer.confirm('您确定要删除吗？', {
+//             btn: ['确认','返回'] //按钮
+//         }, function(){
+//             AsyncDelete("/tbUser/delete",{"id":id},function(req){
+//                 layer.alert(req.message,function(){
+//                     layer.closeAll();
+//                     load(obj);
+//                 });
+//             });
+//
+//         }, function(){
+//             layer.closeAll();
+//         });
+//     }
+// }
 
 //重新加载table
 function load(obj){
-    AsyncPost("/tbUser/getList/",{"pageNum":pageCurr,"pageSize":10},function (data) {
+    AsyncPost("/tbUser/getPerson/",{"pageNum":pageCurr,"pageSize":10},function (data) {
         initTableByData(data.data);
+    })
+    AsyncPost("/tbContest/getContest/",{"pageNum":pageCurr,"pageSize":10},function (data) {
+        initTableByData1(data.data);
     })
 }
 

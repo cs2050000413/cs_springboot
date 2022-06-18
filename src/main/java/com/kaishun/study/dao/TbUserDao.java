@@ -1,6 +1,7 @@
 package com.kaishun.study.dao;
 
 import com.kaishun.study.entity.TbUser;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -67,6 +68,8 @@ public interface TbUserDao {
     List<TbUser> findStudent();
 
     List<TbUser> findTeacher();
+
+    List<String> findUserInContest(String contestId);
 
     TbUser login(TbUser tbUser);
 

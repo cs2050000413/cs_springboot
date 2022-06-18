@@ -88,6 +88,8 @@ public interface TbUserService {
 
     List<TbUser> getTeacherList();
 
+    List<TbUser> getUserByContestId(String contestId);
+
     TbUser queryByUserName(String userName);
 
     void addUser(TbUser user,String roleId);

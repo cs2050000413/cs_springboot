@@ -20,9 +20,13 @@
     <!--查询单个-->
     <select id="queryById" resultMap="TbUserMap">
         select
-          id, user_name,pname,user_password, phone, sex, age, create_time, update_time, update_user
-        from kaishun.tb_user
-        where id = #{id}
+            a.id, a.user_name,a.pname, a.user_password, a.phone, a.sex, a.age,c.id cid,`name` role,a.create_time, a.update_time, a.update_user
+        from tb_user a
+                 inner JOIN
+             tb_user_role b
+             ON a.id = b.user_id
+                 inner join tb_role c on role_id = c.id
+        where a.id = #{id}
     </select>
 
     <!--查询指定行数据-->
@@ -146,6 +150,11 @@
                  left join tb_user_role c
                            on s.id = c.user_id
         where c.role_id = "e18ac56d258c41f09d959ffb4a99daa2"
+    </select>
+
+    <!--获取竞赛用户-->
+    <select id="findUserInContest" resultType="java.lang.String">
+        SELECT user_id FROM tb_contest_user WHERE contest_id = #{contestId}
     </select>
 
     <select id="login" resultMap="TbUserMap">

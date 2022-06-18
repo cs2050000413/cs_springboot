@@ -6,17 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * ClassName:    HtmlController
- * Package:    com.kaishun.study.controller
- * Description:
- * Datetime:    2020/2/14   13:40
- * Author:   zhoukaishun
- */
+
 @SuppressWarnings("AlibabaClassMustHaveAuthor")
 @Controller
 @RequestMapping("/html")
 public class HtmlController {
+
+    @JwtIgnore
+    @RequestMapping("/contestPerson")
+    public String getContestPerson() {
+        return "contest/contestPerson";
+    }
 
     @JwtIgnore
     @RequestMapping("/contestWin")

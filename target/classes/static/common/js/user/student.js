@@ -24,7 +24,8 @@ function initTableByData(obj){
         ,limit: Number.MAX_VALUE
         ,cols: [[ //表头
             {field: 'id', title: 'ID',sort: true}
-            ,{field: 'userName', title: '学生姓名', }
+            ,{field: 'pname', title: '姓名',sort: true}
+            ,{field: 'userName', title: '用户名', }
             ,{field: 'phone', title: '手机号', }
             ,{field: 'sex', title: '性别', sort: true,templet:"#handleSex"}
             ,{field: 'age', title: '年龄', sort: true}
