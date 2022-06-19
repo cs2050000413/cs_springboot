@@ -22,6 +22,15 @@
         where id = #{id}
     </select>
 
+    <!--查询单个-->
+    <select id="queryByContestId" resultMap="TbContestWinMap">
+        select
+            distinct s.id,s.contest_id,c.contest_name,c.type,c.contest_time,s.win_type,s.win_time,s.remark
+        from tb_contest_winning s
+                 left join tb_contest c on s.contest_id=c.id
+        where contest_id = #{contestId}
+    </select>
+
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TbContestWinMap">
         select

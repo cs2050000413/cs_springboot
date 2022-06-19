@@ -131,8 +131,8 @@ public class TbUserServiceImpl implements TbUserService {
     }
 
     @Override
-    public int findContestUserByUserId(String userId){
-        if(tbContestUserDao.findByUserId(userId)>0)
+    public int findContestUserByUserId(String userId,String contestId){
+        if(tbContestUserDao.findByUserId(userId,contestId)>0)
             return 1;
         else
             return 0;

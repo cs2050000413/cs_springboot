@@ -7,5 +7,5 @@ public interface TbContestUserDao {
 
     int deleteByUserId(String userId);
 
-    Integer findByUserId(String userId);
+    Integer findByUserId(String userId,String contestId);
 }

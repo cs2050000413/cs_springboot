@@ -4,7 +4,7 @@
 
     <select id="findByUserId" resultType="java.lang.Integer">
         select count(*) from tb_contest_user
-        where user_id = #{userId}
+        where user_id = #{userId} and contest_id=#{contestId}
     </select>
     <!--新增所有列-->
     <insert id="insert">

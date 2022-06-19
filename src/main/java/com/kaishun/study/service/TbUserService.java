@@ -83,7 +83,7 @@ public interface TbUserService {
 
     TbUser getUserInfo(HttpServletRequest request);
 
-    int findContestUserByUserId(String userId);
+    int findContestUserByUserId(String userId,String contestId);
 
     int addContestUser(String contestId,String userId);
 
