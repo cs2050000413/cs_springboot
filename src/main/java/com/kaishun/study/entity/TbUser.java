@@ -38,6 +38,7 @@ public class TbUser implements Serializable {
     /**
     * 密码
     */
+    @Password
     @ApiModelProperty("密码")
     private String userPassword;
     /**
